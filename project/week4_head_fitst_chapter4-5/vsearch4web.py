@@ -10,13 +10,9 @@ from vsearch import search4letters
 app = Flask(__name__)
 def log_request(req:'flask_request',res:str) ->None:
     with open('vsearch.log','a') as log:
-        """从web应用的html表单提交的数据"""
-        print(req.form,file=log)
-        """运行web浏览器的ip地址"""
-        print(req.remote_addr,file=log)
-        """提交数据的浏览器的标识"""
-        print(req.user_agent,file=log)
-        print(res,file=log)
+        """从web应用的html表单提交的数据，运行web浏览器的ip地址，提交数据的浏览器的标识"""
+        print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|')
+
 
 @app.route('/search4',methods = ['POST','GET'])
 def do_search()-> 'html':
