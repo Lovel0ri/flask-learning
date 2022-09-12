@@ -8,20 +8,23 @@ from dist.vsearch import search4letters
 app = Flask(__name__)
 
 
+# @app.route('/')
+# def hello()-> 302:  # put application's code here
+#     return redirect('/entry')
 @app.route('/')
-def hello()->str:  # put application's code here
-    return 'Hello World from Flask'
-
 @app.route('/search4',methods = ['POST'])
-def do_search()-> str:
-    return str(search4letters('life,the universe,and everything','aeiou,!'))
+def do_search()-> 'html':
     phrase = request.form['phrase']
     letters = request.form['letters']
-    return str(search4letters(phrase,letters))
+    title = 'Here are the results'
+    results = str(search4letters(phrase,letters))
+    return render_template('results.html',the_phrase = phrase,
+                                        the_letters = letters,
+                                        the_tilte = title,
+                                        the_results = results)
 @app.route('/entry')
 def entry_page() -> 'html':
-    return render_template('entry.html',
-                           the_title = 'Welcome to search4letters on the web!')
+    return render_template('entry.html',the_title = 'Welcome to search4letters on the web!')
 
 
 # if __name__ == '__main__':
