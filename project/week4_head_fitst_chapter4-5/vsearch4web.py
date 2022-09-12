@@ -8,6 +8,8 @@ from flask import Flask,render_template,request,escape
 from vsearch import search4letters
 
 app = Flask(__name__)
+
+"""写入记录日志文件"""
 def log_request(req:'flask_request',res:str) ->None:
     with open('vsearch.log','a') as log:
         """从web应用的html表单提交的数据，运行web浏览器的ip地址，提交数据的浏览器的标识"""
@@ -27,10 +29,21 @@ def do_search()-> 'html':
                                         the_results = results)
 
 @app.route('/viewlog')
-def view_the_log()->str:
+def view_the_log()->'html':
+    contents = []
     with open('vsearch.log') as log:
-        contents = log.read()
-    return escape(contents)
+        for line in log:
+            contents.append([])
+            for item in line.split('|'):
+                contents[-1].append(escape(item))
+    return  str(contents)
+
+    titles = ['Form Data','Remote_addr','User_agent','Results']
+    return render_template('viewlog.html',
+                           the_title='View Log',
+                           the_row_titles=titles,
+                           the_data=contents,)
+    # return escape(''.join(contents))
 
 
 @app.route('/')
