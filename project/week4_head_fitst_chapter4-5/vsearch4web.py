@@ -11,9 +11,36 @@ app = Flask(__name__)
 
 """写入记录日志文件"""
 def log_request(req:'flask_request',res:str) ->None:
-    with open('vsearch.log','a') as log:
-        """从web应用的html表单提交的数据，运行web浏览器的ip地址，提交数据的浏览器的标识"""
-        print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|')
+    # #定义连接属性
+    dbconfig = {'host':'127.0.0.1',
+                'user':'vsearch',
+                'password':'vsearchpasswd',
+                'database':'vsearchlogDB',}
+    # #导入驱动程序
+    import mysql.connector
+    # #建立连接
+    conn = mysql.connector.connect(**dbconfig)
+    # #创建游标
+    cursor = conn.cursor()
+    #创建字符串，包含想要使用的查询
+    _SQL = """insert into log1
+                (phrase,letters,ip,browser_string,results)
+                values
+                (%s,%s,%s,%s,%s)"""
+
+
+    cursor.execute(_SQL,(req.form['phrase'],
+                         req.form['letters'],
+                         req.remote_addr,
+                         req.user_agent.browser,
+                         res,))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    # with open('vsearch.log','a') as log:
+    #     """从web应用的html表单提交的数据，运行web浏览器的ip地址，提交数据的浏览器的标识"""
+    #     print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|')
 
 
 @app.route('/search4',methods = ['POST','GET'])
