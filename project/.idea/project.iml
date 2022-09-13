@@ -7,6 +7,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/week4_head_fitst_chapter4-5/Lib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/week4_head_fitst_chapter4-5/Scripts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/week4_head_fitst_chapter4-5/sources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/上面的文件夹是head_fitst_chapter_4-8" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/week4_head_fitst_chapter4-5" />
     </content>
     <content url="file://$MODULE_DIR$/week4_head_fitst_chapter4-5/templates" />
